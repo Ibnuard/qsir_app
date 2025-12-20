@@ -49,10 +49,7 @@ class HomeShopCard extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
-                      Icons.settings,
-                      color: AppColors.primary.withValues(alpha: 0.6),
-                    ),
+                    icon: Icon(Icons.settings, color: AppColors.primary),
                   ),
                 ],
               ),

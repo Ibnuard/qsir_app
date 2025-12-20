@@ -40,7 +40,7 @@ class HomeController extends GetxController {
             icon: Icons.warning_amber_rounded,
             isWarning: true,
           ),
-          SubMenuItem(title: 'Stock adjustment', icon: Icons.edit_note),
+          SubMenuItem(title: 'Penyesuaian stok', icon: Icons.edit_note),
         ];
         break;
       case 'Kas & Shift':
@@ -48,7 +48,7 @@ class HomeController extends GetxController {
           SubMenuItem(title: 'Open / Close shift', icon: Icons.swap_horiz),
           SubMenuItem(title: 'Riwayat cash in / out', icon: Icons.history),
           SubMenuItem(title: 'Selisih kas', icon: Icons.money_off),
-          SubMenuItem(title: 'Closing report', icon: Icons.summarize),
+          SubMenuItem(title: 'Laporan penutupan', icon: Icons.summarize),
         ];
         break;
       case 'Managemen Kasir':

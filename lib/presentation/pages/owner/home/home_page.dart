@@ -12,44 +12,42 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // transparan
-        statusBarIconBrightness: Brightness.light, // icon putih
-        statusBarBrightness: Brightness.dark, // iOS
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
       ),
-    );
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          const HomeBackground(),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 24.w,
-                      vertical: 8.h,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        body: Stack(
+          children: [
+            const HomeBackground(),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 8.h,
+                      ),
+                      child: Column(
+                        children: [
+                          const HomeHeader(),
+                          SizedBox(height: 16.h),
+                          const HomeShopCard(),
+                          SizedBox(height: 24.h),
+                          const HomeMainMenu(),
+                          SizedBox(height: 24.h),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        const HomeHeader(),
-                        SizedBox(height: 16.h),
-                        const HomeShopCard(),
-                        SizedBox(height: 24.h),
-                        const HomeMainMenu(),
-                        SizedBox(height: 24.h),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

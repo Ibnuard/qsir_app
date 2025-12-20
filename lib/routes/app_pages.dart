@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:qsir_app/presentation/pages/login/login_page.dart';
-import 'package:qsir_app/presentation/pages/owner/home/bindings/home_binding.dart';
+import 'package:qsir_app/presentation/pages/owner/main/bindings/owner_main_binding.dart';
 import 'package:qsir_app/presentation/pages/owner/main/main_page.dart';
 import 'package:qsir_app/presentation/pages/splash/splash_page.dart';
 import 'package:qsir_app/routes/app_routes.dart';
@@ -12,7 +12,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.main,
       page: () => OwnerMainPage(),
-      binding: HomeBinding(),
+      binding: OwnerMainBinding(),
     ),
   ];
 }

@@ -1,52 +1,54 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qsir_app/presentation/pages/owner/home/home_page.dart';
+import 'package:qsir_app/presentation/pages/owner/main/controllers/owner_main_controller.dart';
 import 'package:qsir_app/presentation/pages/owner/profile/profile_page.dart';
 import 'package:qsir_app/presentation/pages/owner/statistics/statistics_page.dart';
 
-class OwnerMainPage extends StatefulWidget {
+class OwnerMainPage extends GetView<OwnerMainController> {
   const OwnerMainPage({super.key});
 
   @override
-  State<OwnerMainPage> createState() => _OwnerMainPageState();
-}
-
-class _OwnerMainPageState extends State<OwnerMainPage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = const [
-    HomePage(),
-    StatisticsPage(),
-    ProfilePage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = const [
+      HomePage(),
+      StatisticsPage(),
+      ProfilePage(),
+    ];
+
     return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.chart_bar),
-            label: 'Statistik',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.building_2_fill),
-            label: 'Toko',
-          ),
-        ],
+      body: Obx(() => pages[controller.currentIndex.value]),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex: controller.currentIndex.value,
+          onTap: controller.changePage,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                controller.currentIndex.value == 0
+                    ? Icons.home
+                    : Icons.home_outlined,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                controller.currentIndex.value == 1
+                    ? Icons.bar_chart
+                    : Icons.bar_chart_outlined,
+              ),
+              label: 'Laporan',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                controller.currentIndex.value == 2
+                    ? Icons.store
+                    : Icons.store_outlined,
+              ),
+              label: 'Toko',
+            ),
+          ],
+        ),
       ),
     );
   }
