@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
@@ -73,70 +74,70 @@ final ThemeData appTheme = ThemeData(
   textTheme: GoogleFonts.interTextTheme().copyWith(
     // Display
     displayLarge: GoogleFonts.inter(
-      fontSize: 57,
+      fontSize: 57.sp,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
     displayMedium: GoogleFonts.inter(
-      fontSize: 45,
+      fontSize: 45.sp,
       fontWeight: FontWeight.w700,
       color: AppColors.textPrimary,
     ),
     displaySmall: GoogleFonts.inter(
-      fontSize: 36,
+      fontSize: 36.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
 
     // Headline
     headlineLarge: GoogleFonts.inter(
-      fontSize: 32,
+      fontSize: 32.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
     headlineMedium: GoogleFonts.inter(
-      fontSize: 28,
+      fontSize: 28.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
     headlineSmall: GoogleFonts.inter(
-      fontSize: 24,
+      fontSize: 24.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
 
     // Title
     titleLarge: GoogleFonts.inter(
-      fontSize: 22,
+      fontSize: 22.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textPrimary,
     ),
     titleMedium: GoogleFonts.inter(
-      fontSize: 16,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w500,
       color: AppColors.textPrimary,
     ),
     titleSmall: GoogleFonts.inter(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w500,
       color: AppColors.textSecondary,
     ),
 
     // Body
     bodyLarge: GoogleFonts.inter(
-      fontSize: 16,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w400,
       color: AppColors.textPrimary,
       height: 1.5,
     ),
     bodyMedium: GoogleFonts.inter(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w400,
       color: AppColors.textSecondary,
       height: 1.5,
     ),
     bodySmall: GoogleFonts.inter(
-      fontSize: 12,
+      fontSize: 12.sp,
       fontWeight: FontWeight.w400,
       color: AppColors.textSecondary,
       height: 1.4,
@@ -144,17 +145,17 @@ final ThemeData appTheme = ThemeData(
 
     // Label (Buttons, Chips, etc.)
     labelLarge: GoogleFonts.inter(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.textOnPrimary,
     ),
     labelMedium: GoogleFonts.inter(
-      fontSize: 12,
+      fontSize: 12.sp,
       fontWeight: FontWeight.w500,
       color: AppColors.textOnPrimary,
     ),
     labelSmall: GoogleFonts.inter(
-      fontSize: 11,
+      fontSize: 11.sp,
       fontWeight: FontWeight.w500,
       color: AppColors.textSecondary,
     ),
