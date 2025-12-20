@@ -19,12 +19,12 @@ class HomeShopCard extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 28,
+                    radius: 24,
                     backgroundColor: AppColors.primary.withValues(alpha: 0.2),
                     child: Icon(
                       Icons.store,
                       color: AppColors.primary.withValues(alpha: 0.6),
-                      size: 28,
+                      size: 24,
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -112,6 +112,16 @@ class HomeShopCard extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+
+              SizedBox(height: 12.h),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Lihat Detail"),
                 ),
               ),
             ],

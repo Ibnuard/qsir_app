@@ -8,7 +8,7 @@ class HomeBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.20,
+      height: MediaQuery.of(context).size.height * 0.22,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
