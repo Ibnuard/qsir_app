@@ -1,35 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:qsir_app/presentation/pages/owner/home/controllers/home_controller.dart';
 
-class HomeMainMenu extends StatelessWidget {
+class HomeMainMenu extends GetView<HomeController> {
   const HomeMainMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> menuItems = [
-      {
-        'label': 'Produk & Stock',
-        'icon': Icons.inventory_2_rounded,
-        'colors': [const Color(0xFF2196F3), const Color(0xFF64B5F6)],
-      },
-      {
-        'label': 'Kas & Shift',
-        'icon': Icons.point_of_sale_rounded,
-        'colors': [const Color(0xFF4CAF50), const Color(0xFF81C784)],
-      },
-      {
-        'label': 'Managemen Kasir',
-        'icon': Icons.badge_rounded,
-        'colors': [const Color(0xFFFF9800), const Color(0xFFFFB74D)],
-      },
-      {
-        'label': 'Pelanggan',
-        'icon': Icons.groups_rounded,
-        'colors': [const Color(0xFF9C27B0), const Color(0xFFBA68C8)],
-      },
-    ];
-
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -39,9 +17,9 @@ class HomeMainMenu extends StatelessWidget {
         mainAxisSpacing: 16.h,
         childAspectRatio: 1.5,
       ),
-      itemCount: menuItems.length,
+      itemCount: controller.menuItems.length,
       itemBuilder: (context, index) {
-        final item = menuItems[index];
+        final item = controller.menuItems[index];
         return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -63,7 +41,8 @@ class HomeMainMenu extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () =>
+                  controller.navigateToSubMenu(item['label'] as String),
               borderRadius: BorderRadius.circular(16.r),
               child: Padding(
                 padding: EdgeInsets.all(16.w),
