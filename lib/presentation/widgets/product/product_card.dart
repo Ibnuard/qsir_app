@@ -5,16 +5,24 @@ import 'package:intl/intl.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
 
 class ProductItem {
+  final String id;
   final String name;
   final double price;
   final int stock;
-  final String? imageUrl;
+  final String categoryId;
+  final String sku;
+  final String? imagePath;
+  final int minStock;
 
   ProductItem({
+    required this.id,
     required this.name,
     required this.price,
     required this.stock,
-    this.imageUrl,
+    required this.categoryId,
+    required this.sku,
+    this.imagePath,
+    required this.minStock,
   });
 }
 
@@ -66,14 +74,14 @@ class ProductCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.surfaceVariant,
                     borderRadius: BorderRadius.circular(8.r),
-                    image: product.imageUrl != null
+                    image: product.imagePath != null
                         ? DecorationImage(
-                            image: NetworkImage(product.imageUrl!),
+                            image: NetworkImage(product.imagePath!),
                             fit: BoxFit.cover,
                           )
                         : null,
                   ),
-                  child: product.imageUrl == null
+                  child: product.imagePath == null
                       ? Icon(
                           Icons.image_not_supported_outlined,
                           color: AppColors.textDisabled,
