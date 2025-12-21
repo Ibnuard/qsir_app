@@ -1,5 +1,8 @@
 class AppRoutes {
   static const String initialRoute = '/';
   static const String login = "/login";
-  static const String main = "/main";
+
+  // Owner
+  static const String ownerMain = "/owner/main";
+  static const String ownerProductList = "/owner/product/list";
 }

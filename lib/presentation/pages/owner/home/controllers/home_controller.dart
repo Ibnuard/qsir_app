@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/owner_sub_menu_page.dart';
+import 'package:qsir_app/routes/app_routes.dart';
 
 class HomeController extends GetxController {
   final List<Map<String, dynamic>> menuItems = [
@@ -33,7 +34,11 @@ class HomeController extends GetxController {
     switch (label) {
       case 'Produk & Stock':
         items = [
-          SubMenuItem(title: 'Daftar produk', icon: Icons.list_alt),
+          SubMenuItem(
+            title: 'Daftar produk',
+            icon: Icons.list_alt,
+            onTap: () => navigateToMenu(AppRoutes.ownerProductList),
+          ),
           SubMenuItem(title: 'Stok tersisa', icon: Icons.inventory),
           SubMenuItem(
             title: 'Produk hampir habis',
@@ -71,5 +76,9 @@ class HomeController extends GetxController {
     if (items.isNotEmpty) {
       Get.to(() => OwnerSubMenuPage(title: title, items: items));
     }
+  }
+
+  void navigateToMenu(String routes) {
+    Get.toNamed(routes);
   }
 }

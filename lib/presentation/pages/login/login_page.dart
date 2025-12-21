@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                           "Password: ${_inputGroupController.getText('password')}",
                         );
 
-                        Get.offNamed(AppRoutes.main);
+                        Get.offNamed(AppRoutes.ownerMain);
                       },
                       child: Text("Masuk"),
                     ),
