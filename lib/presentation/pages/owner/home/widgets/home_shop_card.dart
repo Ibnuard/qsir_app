@@ -8,122 +8,198 @@ class HomeShopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundColor: AppColors.primary.withValues(alpha: 0.2),
-                    child: Icon(
-                      Icons.store,
-                      color: AppColors.primary.withValues(alpha: 0.6),
-                      size: 24,
-                    ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.03),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(14.r),
                   ),
-                  SizedBox(width: 8.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Toko Tekotok",
-                          style: context.textTheme.titleMedium?.copyWith(
-                            color: Colors.black,
-                          ),
+                  child: Icon(
+                    Icons.store_rounded,
+                    color: AppColors.primary,
+                    size: 24.sp,
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Toko Tekotok",
+                        style: context.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17.sp,
+                          letterSpacing: -0.5,
                         ),
-                        Text(
-                          "Toko UMKM Tekotok",
-                          style: context.textTheme.bodyMedium?.copyWith(
+                      ),
+                      SizedBox(height: 2.h),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 12.sp,
                             color: Colors.grey,
                           ),
-                        ),
-                      ],
-                    ),
+                          SizedBox(width: 4.w),
+                          Expanded(
+                            child: Text(
+                              "Toko UMKM Tekotok",
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  IconButton(
+                ),
+                Material(
+                  color: Colors.grey.shade50,
+                  shape: const CircleBorder(),
+                  child: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.settings, color: AppColors.primary),
+                    icon: Icon(
+                      Icons.settings_outlined,
+                      color: Colors.blueGrey,
+                      size: 20.sp,
+                    ),
+                    padding: EdgeInsets.all(8.w),
+                    constraints: const BoxConstraints(),
                   ),
-                ],
+                ),
+              ],
+            ),
+            SizedBox(height: 24.h),
+            Container(
+              padding: EdgeInsets.all(16.w),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              SizedBox(height: 16.h),
-              IntrinsicHeight(
+              child: IntrinsicHeight(
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Total Penjualan",
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              "Rp 1.000.000",
-                              style: context.textTheme.labelLarge?.copyWith(
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildStatItem(
+                      context,
+                      title: "Total Penjualan",
+                      value: "Rp 1.000.000",
+                      valueColor: Colors.green.shade700,
+                      icon: Icons.payments_outlined,
                     ),
                     VerticalDivider(
-                      width: 1,
+                      width: 32.w,
                       thickness: 1,
-                      color: Colors.grey.shade300,
+                      color: Colors.grey.shade200,
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Jumlah Transaksi",
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              "128",
-                              style: context.textTheme.labelLarge?.copyWith(
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildStatItem(
+                      context,
+                      title: "Transaksi",
+                      value: "128",
+                      valueColor: Colors.blue.shade700,
+                      icon: Icons.receipt_long_outlined,
                     ),
                   ],
                 ),
               ),
+            ),
+            SizedBox(height: 20.h),
+            SizedBox(
+              width: double.infinity,
+              height: 48.h,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Lihat Detail Laporan",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13.sp,
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    Icon(Icons.arrow_forward_rounded, size: 16.sp),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-              SizedBox(height: 12.h),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Lihat Detail"),
+  Widget _buildStatItem(
+    BuildContext context, {
+    required String title,
+    required String value,
+    required Color valueColor,
+    required IconData icon,
+  }) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 12.sp, color: AppColors.textSecondary),
+              SizedBox(width: 4.w),
+              Text(
+                title,
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                  fontSize: 11.sp,
                 ),
               ),
             ],
           ),
-        ),
+          SizedBox(height: 6.h),
+          Text(
+            value,
+            style: context.textTheme.titleMedium?.copyWith(
+              color: valueColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 15.sp,
+            ),
+          ),
+        ],
       ),
     );
   }

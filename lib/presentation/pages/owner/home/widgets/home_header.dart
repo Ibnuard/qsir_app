@@ -25,15 +25,13 @@ class HomeHeader extends StatelessWidget {
           children: [
             Text(
               "John Doe",
-              style: context.textTheme.titleMedium?.copyWith(
+              style: context.textTheme.titleSmall?.copyWith(
                 color: Colors.white,
               ),
             ),
             Text(
               "Owner",
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: Colors.white,
-              ),
+              style: context.textTheme.bodySmall?.copyWith(color: Colors.white),
             ),
           ],
         ),

@@ -23,27 +23,23 @@ class HomePage extends StatelessWidget {
           children: [
             const HomeBackground(),
             SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24.w,
-                        vertical: 8.h,
-                      ),
-                      child: Column(
-                        children: [
-                          const HomeHeader(),
-                          SizedBox(height: 16.h),
-                          const HomeShopCard(),
-                          SizedBox(height: 24.h),
-                          const HomeMainMenu(),
-                          SizedBox(height: 24.h),
-                        ],
-                      ),
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 24.h),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        const HomeHeader(),
+                        SizedBox(height: 16.h),
+                        const HomeShopCard(),
+                        SizedBox(height: 24.h),
+                        const HomeMainMenu(),
+                        SizedBox(height: 24.h),
+                      ]),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
