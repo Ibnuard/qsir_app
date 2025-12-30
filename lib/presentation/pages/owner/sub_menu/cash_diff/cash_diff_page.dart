@@ -67,35 +67,38 @@ class CashDiffPage extends GetView<CashDiffController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildSectionTitle(context, "Riwayat Selisih Kas"),
-                    if (!controller.isHistoryExpanded.value)
-                      InkWell(
-                        onTap: () => controller.isHistoryExpanded.value = true,
-                        borderRadius: BorderRadius.circular(8.r),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 4.h,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Lihat Semua",
-                                style: context.textTheme.bodySmall?.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                    InkWell(
+                      onTap: null, // No action as requested
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Lihat Semua",
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.5,
+                                ), // Muted for no action
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(width: 4.w),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 10.sp,
-                                color: AppColors.primary,
-                              ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(width: 4.w),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 10.sp,
+                              color: AppColors.primary.withValues(
+                                alpha: 0.5,
+                              ), // Muted for no action
+                            ),
+                          ],
                         ),
                       ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 12.h),
@@ -381,6 +384,13 @@ class CashDiffPage extends GetView<CashDiffController> {
           SizedBox(height: 12.h),
           _buildInfoRow(
             context,
+            Icons.calendar_today_outlined,
+            "Tanggal",
+            controller.formatDate(record.openedAt),
+          ),
+          SizedBox(height: 12.h),
+          _buildInfoRow(
+            context,
             Icons.person_outline,
             "Dibuka oleh",
             record.openedBy,
@@ -489,6 +499,13 @@ class CashDiffPage extends GetView<CashDiffController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    controller.formatDate(record.openedAt),
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: Colors.grey,
+                      fontSize: 10.sp,
+                    ),
+                  ),
                   Text(
                     "${controller.formatTime(record.openedAt)} - ${controller.formatTime(record.closedAt)}",
                     style: context.textTheme.bodyMedium?.copyWith(

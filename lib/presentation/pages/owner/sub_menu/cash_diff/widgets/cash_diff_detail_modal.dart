@@ -104,37 +104,54 @@ class CashDiffDetailModal extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
       ),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (isDifference)
-                Icon(Icons.warning_amber_rounded, color: color, size: 24.sp),
-              if (isDifference) SizedBox(width: 8.w),
-              Text(
-                controller.getStatusLabel(record.amount),
-                style: context.textTheme.titleMedium?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (isDifference)
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: color,
+                        size: 16.sp,
+                      ),
+                    if (isDifference) SizedBox(width: 6.w),
+                    Text(
+                      controller.getStatusLabel(record.amount),
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            controller.formatCurrency(record.amount),
-            style: context.textTheme.headlineLarge?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w900,
+                SizedBox(height: 2.h),
+                Text(
+                  controller.formatCurrency(record.amount),
+                  style: context.textTheme.headlineSmall?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
             ),
           ),
+          if (isDifference)
+            Icon(
+              Icons.error_outline,
+              color: color.withValues(alpha: 0.5),
+              size: 32.sp,
+            ),
         ],
       ),
     );
@@ -330,6 +347,13 @@ class CashDiffDetailModal extends StatelessWidget {
       child: Column(
         children: [
           _buildInfoRow(context, Icons.tag, "Shift ID", record.id),
+          SizedBox(height: 12.h),
+          _buildInfoRow(
+            context,
+            Icons.calendar_today_outlined,
+            "Tanggal",
+            controller.formatDate(record.openedAt),
+          ),
           SizedBox(height: 12.h),
           _buildInfoRow(
             context,
