@@ -45,12 +45,6 @@ class HomeController extends GetxController {
             icon: Icons.inventory,
             onTap: () => Get.to(() => const OwnerCategoryPage()),
           ),
-          SubMenuItem(
-            title: 'Produk hampir habis',
-            icon: Icons.warning_amber_rounded,
-            isWarning: true,
-          ),
-          SubMenuItem(title: 'Penyesuaian stok', icon: Icons.edit_note),
         ];
         break;
       case 'Kas & Shift':

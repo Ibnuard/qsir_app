@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
 import 'package:qsir_app/presentation/widgets/custom_search_bar.dart';
 import 'package:qsir_app/presentation/widgets/product/product_card.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/product/productlist/widgets/product_filter_bottom_sheet.dart';
 import 'package:qsir_app/routes/app_routes.dart';
 
 class OwnerProductListPage extends StatelessWidget {
@@ -85,6 +86,18 @@ class OwnerProductListPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Get.back(),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list_rounded, color: Colors.black),
+            onPressed: () {
+              Get.bottomSheet(
+                const ProductFilterBottomSheet(),
+                isScrollControlled: true,
+              );
+            },
+          ),
+          SizedBox(width: 8.w),
+        ],
       ),
       body: SafeArea(
         child: Column(

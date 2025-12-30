@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
+import 'package:qsir_app/presentation/widgets/custom_input.dart';
 import 'package:qsir_app/presentation/widgets/input_group.dart';
 
 class OwnerProductAddPage extends StatefulWidget {
@@ -13,6 +14,29 @@ class OwnerProductAddPage extends StatefulWidget {
 
 class _OwnerProductAddPageState extends State<OwnerProductAddPage> {
   final InputGroupController _controller = InputGroupController();
+  bool useDiscount = false;
+  double discountPercent = 0;
+  double originalPrice = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.getController('price').addListener(_updatePrice);
+    _controller.getController('discount_percent').addListener(_updateDiscount);
+  }
+
+  void _updatePrice() {
+    setState(() {
+      originalPrice = double.tryParse(_controller.getText('price')) ?? 0;
+    });
+  }
+
+  void _updateDiscount() {
+    setState(() {
+      discountPercent =
+          double.tryParse(_controller.getText('discount_percent')) ?? 0;
+    });
+  }
 
   @override
   void dispose() {
@@ -87,6 +111,104 @@ class _OwnerProductAddPageState extends State<OwnerProductAddPage> {
                     label: 'Harga',
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(hintText: '0'),
+                  ),
+                  InputGroupItem(
+                    key: 'use_discount',
+                    customBuilder: (context, controller) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 24.w,
+                                height: 24.w,
+                                child: Checkbox(
+                                  value: useDiscount,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      useDiscount = value ?? false;
+                                    });
+                                  },
+                                  activeColor: AppColors.primary,
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                "Gunakan Diskon",
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (useDiscount) ...[
+                            SizedBox(height: 16.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: CustomInput(
+                                    label: "Diskon (%)",
+                                    controller: _controller.getController(
+                                      'discount_percent',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: '0',
+                                      suffixText: '%',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 16.w),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Harga Setelah Diskon",
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w,
+                                          vertical: 12.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade50,
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
+                                          border: Border.all(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "Rp ${(originalPrice * (1 - discountPercent / 100)).toStringAsFixed(0)}",
+                                          style: context.textTheme.bodyLarge
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.primary,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
+                      );
+                    },
                   ),
                   InputGroupItem(
                     key: 'stock',

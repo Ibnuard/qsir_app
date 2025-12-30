@@ -8,6 +8,8 @@ class InputGroupItem {
   final InputDecoration? decoration;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final Widget Function(BuildContext context, TextEditingController controller)?
+  customBuilder;
 
   InputGroupItem({
     required this.key,
@@ -16,6 +18,7 @@ class InputGroupItem {
     this.decoration,
     this.keyboardType,
     this.validator,
+    this.customBuilder,
   });
 }
 
@@ -91,6 +94,16 @@ class _InputGroupState extends State<InputGroup> {
       children: List.generate(widget.items.length, (index) {
         final item = widget.items[index];
         final isLast = index == widget.items.length - 1;
+
+        if (item.customBuilder != null) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: isLast ? 0 : 16.0),
+            child: item.customBuilder!(
+              context,
+              _controller.getController(item.key),
+            ),
+          );
+        }
 
         return Padding(
           padding: EdgeInsets.only(bottom: isLast ? 0 : 16.0),

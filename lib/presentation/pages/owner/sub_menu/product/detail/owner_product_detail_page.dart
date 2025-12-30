@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
+import 'package:qsir_app/presentation/widgets/counter_input.dart';
+import 'package:qsir_app/presentation/widgets/custom_input.dart';
 import 'package:qsir_app/presentation/widgets/input_group.dart';
 import 'package:qsir_app/presentation/widgets/product/product_card.dart';
 
@@ -15,6 +17,9 @@ class OwnerProductDetailPage extends StatefulWidget {
 class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
   final InputGroupController _controller = InputGroupController();
   late ProductItem product;
+  bool useDiscount = false;
+  double discountPercent = 0;
+  double originalPrice = 0;
 
   @override
   void initState() {
@@ -26,6 +31,21 @@ class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
       // Handle error or redirect
       Get.back();
     }
+    _controller.getController('price').addListener(_updatePrice);
+    _controller.getController('discount_percent').addListener(_updateDiscount);
+  }
+
+  void _updatePrice() {
+    setState(() {
+      originalPrice = double.tryParse(_controller.getText('price')) ?? 0;
+    });
+  }
+
+  void _updateDiscount() {
+    setState(() {
+      discountPercent =
+          double.tryParse(_controller.getText('discount_percent')) ?? 0;
+    });
   }
 
   void _initializeData() {
@@ -74,27 +94,59 @@ class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
             children: [
               // Image Placeholder
               Center(
-                child: Container(
-                  width: 120.w,
-                  height: 120.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant,
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(color: AppColors.border),
-                    image: product.imagePath != null
-                        ? DecorationImage(
-                            image: NetworkImage(product.imagePath!),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
-                  ),
-                  child: product.imagePath == null
-                      ? Icon(
-                          Icons.image_not_supported_outlined,
-                          color: AppColors.textSecondary,
-                          size: 32.sp,
-                        )
-                      : null,
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          width: 120.w,
+                          height: 120.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.surfaceVariant,
+                            borderRadius: BorderRadius.circular(16.r),
+                            border: Border.all(color: AppColors.border),
+                            image: product.imagePath != null
+                                ? DecorationImage(
+                                    image: NetworkImage(product.imagePath!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child: product.imagePath == null
+                              ? Icon(
+                                  Icons.image_not_supported_outlined,
+                                  color: AppColors.textSecondary,
+                                  size: 32.sp,
+                                )
+                              : null,
+                        ),
+                        Positioned(
+                          bottom: 8.w,
+                          right: 8.w,
+                          child: Container(
+                            padding: EdgeInsets.all(6.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            child: Icon(
+                              Icons.edit,
+                              size: 14.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    Text(
+                      "Ketuk foto untuk mengubah",
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 24.h),
@@ -117,10 +169,110 @@ class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
                     decoration: const InputDecoration(hintText: '0'),
                   ),
                   InputGroupItem(
+                    key: 'use_discount',
+                    customBuilder: (context, controller) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 24.w,
+                                height: 24.w,
+                                child: Checkbox(
+                                  value: useDiscount,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      useDiscount = value ?? false;
+                                    });
+                                  },
+                                  activeColor: AppColors.primary,
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                "Gunakan Diskon",
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (useDiscount) ...[
+                            SizedBox(height: 16.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: CustomInput(
+                                    label: "Diskon (%)",
+                                    controller: _controller.getController(
+                                      'discount_percent',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: '0',
+                                      suffixText: '%',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 16.w),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Harga Setelah Diskon",
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w,
+                                          vertical: 12.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade50,
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
+                                          border: Border.all(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "Rp ${(originalPrice * (1 - discountPercent / 100)).toStringAsFixed(0)}",
+                                          style: context.textTheme.bodyLarge
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.primary,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
+                      );
+                    },
+                  ),
+                  InputGroupItem(
                     key: 'stock',
                     label: 'Stok Saat Ini',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(hintText: '0'),
+                    customBuilder: (context, controller) => CounterInput(
+                      label: 'Stok Saat Ini',
+                      controller: controller,
+                    ),
                   ),
                   InputGroupItem(
                     key: 'category_id',
