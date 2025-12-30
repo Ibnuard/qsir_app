@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/category/list/owner_category_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/owner_sub_menu_page.dart';
 import 'package:qsir_app/routes/app_routes.dart';
 
@@ -39,7 +40,11 @@ class HomeController extends GetxController {
             icon: Icons.list_alt,
             onTap: () => navigateToMenu(AppRoutes.ownerProductList),
           ),
-          SubMenuItem(title: 'Stok tersisa', icon: Icons.inventory),
+          SubMenuItem(
+            title: 'Kategori produk',
+            icon: Icons.inventory,
+            onTap: () => Get.to(() => const OwnerCategoryPage()),
+          ),
           SubMenuItem(
             title: 'Produk hampir habis',
             icon: Icons.warning_amber_rounded,
