@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_shift/controllers/cash_shift_controller.dart';
 
@@ -52,7 +53,7 @@ class UserInfoCard extends GetView<CashShiftController> {
                 ),
               ),
               Text(
-                "30 Dec 2025", // Mock
+                DateFormat('dd MMM yyyy').format(DateTime.now()),
                 style: context.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),

@@ -17,8 +17,8 @@ class CashShiftController extends GetxController {
   final RxDouble currentBalance = 0.0.obs;
 
   // Shift Metadata
-  final Rx<DateTime?> openedAt = Rx<DateTime?>(null);
-  String? openedBy;
+  final Rxn<DateTime> openedAt = Rxn<DateTime>();
+  final RxnString openedBy = RxnString();
 
   final List<int> quickAmounts = [
     1000,
@@ -78,9 +78,9 @@ class CashShiftController extends GetxController {
       );
       return;
     }
-    isShiftOpen.value = true;
     openedAt.value = DateTime.now();
-    openedBy = userName;
+    openedBy.value = userName;
+    isShiftOpen.value = true;
     Get.snackbar(
       "Sukses",
       "Shift berhasil dibuka",

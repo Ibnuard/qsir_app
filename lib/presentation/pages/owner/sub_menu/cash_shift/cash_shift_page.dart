@@ -95,89 +95,96 @@ class CashShiftPage extends GetView<CashShiftController> {
   }
 
   Widget _buildShiftStatusView(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(24.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check_circle_rounded,
-              size: 80.sp,
-              color: AppColors.success,
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(24.w),
+      child: Column(
+        children: [
+          Icon(
+            Icons.check_circle_rounded,
+            size: 80.sp,
+            color: AppColors.success,
+          ),
+          SizedBox(height: 24.h),
+          Text(
+            "Shift Sedang Aktif",
+            style: context.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 24.h),
-            Text(
-              "Shift Sedang Aktif",
-              style: context.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          SizedBox(height: 12.h),
+          Text(
+            "Anda sudah membuka shift hari ini. Silakan mulai melakukan transaksi di halaman POS.",
+            textAlign: TextAlign.center,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textSecondary,
             ),
-            SizedBox(height: 12.h),
-            Text(
-              "Anda sudah membuka shift hari ini. Silakan mulai melakukan transaksi di halaman POS.",
-              textAlign: TextAlign.center,
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            SizedBox(height: 40.h),
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              child: Column(
-                children: [
-                  _buildStatusRow(
-                    Icons.person_outline,
-                    "Dibuka oleh",
-                    controller.openedBy ?? "-",
-                  ),
-                  const Divider(height: 24),
-                  _buildStatusRow(
-                    Icons.calendar_today_outlined,
-                    "Tanggal",
-                    controller.openedAt.value != null
-                        ? DateFormat(
-                            'dd MMM yyyy',
-                          ).format(controller.openedAt.value!)
-                        : "-",
-                  ),
-                  const Divider(height: 24),
-                  _buildStatusRow(
-                    Icons.access_time_rounded,
-                    "Jam Buka",
-                    controller.openedAt.value != null
-                        ? DateFormat('HH:mm').format(controller.openedAt.value!)
-                        : "-",
-                  ),
-                  const Divider(height: 24),
-                  _buildStatusRow(
-                    Icons.account_balance_wallet_outlined,
-                    "Saldo awal",
-                    "Rp ${controller.startingBalanceController.text}",
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.h),
-            SizedBox(
-              width: double.infinity,
-              height: 52.h,
-              child: OutlinedButton(
-                onPressed: () => controller.closeShift(),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.error,
-                  side: const BorderSide(color: AppColors.error),
+          ),
+          SizedBox(height: 32.h),
+          Container(
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(color: Colors.grey.shade200),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
-                child: const Text("Tutup Shift"),
-              ),
+              ],
             ),
-          ],
-        ),
+            child: Column(
+              children: [
+                _buildStatusRow(
+                  Icons.person_outline,
+                  "Dibuka oleh",
+                  controller.openedBy.value ?? "-",
+                ),
+                const Divider(height: 32),
+                _buildStatusRow(
+                  Icons.calendar_today_outlined,
+                  "Tanggal",
+                  controller.openedAt.value != null
+                      ? DateFormat(
+                          'dd MMM yyyy',
+                        ).format(controller.openedAt.value!)
+                      : "-",
+                ),
+                const Divider(height: 32),
+                _buildStatusRow(
+                  Icons.access_time_rounded,
+                  "Jam Buka",
+                  controller.openedAt.value != null
+                      ? DateFormat('HH:mm').format(controller.openedAt.value!)
+                      : "-",
+                ),
+                const Divider(height: 32),
+                _buildStatusRow(
+                  Icons.account_balance_wallet_outlined,
+                  "Saldo awal",
+                  "Rp ${controller.startingBalanceController.text}",
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 32.h),
+          SizedBox(
+            width: double.infinity,
+            height: 52.h,
+            child: OutlinedButton(
+              onPressed: () => controller.closeShift(),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.error,
+                side: const BorderSide(color: AppColors.error),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+              child: const Text("Tutup Shift"),
+            ),
+          ),
+        ],
       ),
     );
   }
