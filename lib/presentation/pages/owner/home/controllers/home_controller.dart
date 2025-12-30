@@ -69,7 +69,11 @@ class HomeController extends GetxController {
             icon: Icons.history,
             onTap: () => navigateToMenu(AppRoutes.ownerCashHistory),
           ),
-          SubMenuItem(title: 'Selisih kas', icon: Icons.money_off),
+          SubMenuItem(
+            title: 'Selisih kas',
+            icon: Icons.money_off,
+            onTap: () => navigateToMenu(AppRoutes.ownerCashDiff),
+          ),
           SubMenuItem(title: 'Laporan penutupan', icon: Icons.summarize),
         ];
         break;

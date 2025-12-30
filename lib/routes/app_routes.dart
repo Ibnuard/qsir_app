@@ -9,4 +9,5 @@ class AppRoutes {
   static const String ownerProductDetail = "/owner/product/detail";
   static const ownerCashShift = '/owner/cash-shift';
   static const ownerCashHistory = '/owner/cash-history';
+  static const ownerCashDiff = '/owner/cash-diff';
 }
