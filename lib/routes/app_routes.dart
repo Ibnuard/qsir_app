@@ -7,5 +7,6 @@ class AppRoutes {
   static const String ownerProductList = "/owner/product/list";
   static const String ownerProductAdd = "/owner/product/add";
   static const String ownerProductDetail = "/owner/product/detail";
-  static const String ownerCashShift = "/owner/cash-shift";
+  static const ownerCashShift = '/owner/cash-shift';
+  static const ownerCashHistory = '/owner/cash-history';
 }

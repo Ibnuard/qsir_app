@@ -64,7 +64,11 @@ class HomeController extends GetxController {
             icon: Icons.swap_horiz,
             onTap: () => navigateToMenu(AppRoutes.ownerCashShift),
           ),
-          SubMenuItem(title: 'Riwayat cash in / out', icon: Icons.history),
+          SubMenuItem(
+            title: 'Riwayat cash in / out',
+            icon: Icons.history,
+            onTap: () => navigateToMenu(AppRoutes.ownerCashHistory),
+          ),
           SubMenuItem(title: 'Selisih kas', icon: Icons.money_off),
           SubMenuItem(title: 'Laporan penutupan', icon: Icons.summarize),
         ];

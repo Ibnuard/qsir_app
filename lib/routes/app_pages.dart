@@ -4,6 +4,8 @@ import 'package:qsir_app/presentation/pages/owner/main/bindings/owner_main_bindi
 import 'package:qsir_app/presentation/pages/owner/main/main_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_shift/bindings/cash_shift_binding.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_shift/cash_shift_page.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_history/bindings/cash_history_binding.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_history/cash_history_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/add/owner_product_add_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/detail/owner_product_detail_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/productlist/owner_product_list_page.dart';
@@ -34,6 +36,11 @@ class AppPages {
       name: AppRoutes.ownerCashShift,
       page: () => const CashShiftPage(),
       binding: CashShiftBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ownerCashHistory,
+      page: () => const CashHistoryPage(),
+      binding: CashHistoryBinding(),
     ),
   ];
 }
