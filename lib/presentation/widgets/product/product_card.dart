@@ -13,6 +13,8 @@ class ProductItem {
   final String sku;
   final String? imagePath;
   final int minStock;
+  final double discountPercent;
+  final bool useDiscount;
 
   ProductItem({
     required this.id,
@@ -23,6 +25,8 @@ class ProductItem {
     required this.sku,
     this.imagePath,
     required this.minStock,
+    this.discountPercent = 0,
+    this.useDiscount = false,
   });
 }
 
@@ -104,13 +108,54 @@ class ProductCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 4.h),
-                      Text(
-                        currencyFormatter.format(product.price),
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            currencyFormatter.format(
+                              product.useDiscount
+                                  ? product.price *
+                                        (1 - product.discountPercent / 100)
+                                  : product.price,
+                            ),
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          if (product.useDiscount) ...[
+                            SizedBox(width: 8.w),
+                            Text(
+                              currencyFormatter.format(product.price),
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: AppColors.textDisabled,
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 10.sp,
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
+                      if (product.useDiscount) ...[
+                        SizedBox(height: 4.h),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 2.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.error.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          child: Text(
+                            'Diskon ${product.discountPercent.toStringAsFixed(0)}%',
+                            style: context.textTheme.labelSmall?.copyWith(
+                              color: AppColors.error,
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                       SizedBox(height: 4.h),
                       Text(
                         'Stok: ${product.stock}',

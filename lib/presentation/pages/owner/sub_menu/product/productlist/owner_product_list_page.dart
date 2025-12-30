@@ -25,6 +25,26 @@ class OwnerProductListPage extends StatelessWidget {
       ),
       ProductItem(
         id: '2',
+        name: 'Kopi Susu Gula Aren',
+        price: 25000,
+        stock: 8,
+        categoryId: 'minuman',
+        sku: 'KSG-001',
+        minStock: 10,
+        useDiscount: true,
+        discountPercent: 20,
+      ),
+      ProductItem(
+        id: '3',
+        name: 'Roti Bakar Cokelat',
+        price: 15000,
+        stock: 0,
+        categoryId: 'snack',
+        sku: 'RBC-001',
+        minStock: 5,
+      ),
+      ProductItem(
+        id: '4',
         name: 'Americano Hot',
         price: 15000,
         stock: 8,
@@ -33,7 +53,7 @@ class OwnerProductListPage extends StatelessWidget {
         minStock: 10,
       ),
       ProductItem(
-        id: '3',
+        id: '5',
         name: 'Croissant Butter',
         price: 22000,
         stock: 0,
@@ -42,7 +62,7 @@ class OwnerProductListPage extends StatelessWidget {
         minStock: 5,
       ),
       ProductItem(
-        id: '4',
+        id: '6',
         name: 'Red Velvet Latte',
         price: 24000,
         stock: 12,
@@ -51,7 +71,7 @@ class OwnerProductListPage extends StatelessWidget {
         minStock: 10,
       ),
       ProductItem(
-        id: '5',
+        id: '7',
         name: 'Mineral Water 600ml',
         price: 5000,
         stock: 100,
@@ -60,7 +80,7 @@ class OwnerProductListPage extends StatelessWidget {
         minStock: 20,
       ),
       ProductItem(
-        id: '6',
+        id: '8',
         name: 'Donat Kampung',
         price: 8000,
         stock: 3,

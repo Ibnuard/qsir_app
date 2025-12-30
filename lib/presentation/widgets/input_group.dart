@@ -10,6 +10,8 @@ class InputGroupItem {
   final String? Function(String?)? validator;
   final Widget Function(BuildContext context, TextEditingController controller)?
   customBuilder;
+  final VoidCallback? onTap;
+  final bool readOnly;
 
   InputGroupItem({
     required this.key,
@@ -19,6 +21,8 @@ class InputGroupItem {
     this.keyboardType,
     this.validator,
     this.customBuilder,
+    this.onTap,
+    this.readOnly = false,
   });
 }
 
@@ -115,6 +119,8 @@ class _InputGroupState extends State<InputGroup> {
             focusNode: _focusNodes[item.key],
             decoration: item.decoration,
             keyboardType: item.keyboardType,
+            readOnly: item.readOnly,
+            onTap: item.onTap,
             textInputAction: isLast
                 ? TextInputAction.done
                 : TextInputAction.next,

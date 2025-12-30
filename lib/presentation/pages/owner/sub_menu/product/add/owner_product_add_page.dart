@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/category/widgets/category_picker_bottom_sheet.dart';
 import 'package:qsir_app/presentation/widgets/custom_input.dart';
 import 'package:qsir_app/presentation/widgets/input_group.dart';
 
@@ -219,8 +220,19 @@ class _OwnerProductAddPageState extends State<OwnerProductAddPage> {
                   InputGroupItem(
                     key: 'category_id',
                     label: 'Kategori',
+                    readOnly: true,
+                    onTap: () {
+                      Get.bottomSheet(
+                        CategoryPickerBottomSheet(
+                          onSelected: (category) {
+                            _controller.setText('category_id', category.name);
+                          },
+                        ),
+                      );
+                    },
                     decoration: const InputDecoration(
                       hintText: 'Pilih Kategori',
+                      suffixIcon: Icon(Icons.arrow_drop_down),
                     ),
                   ),
                   InputGroupItem(

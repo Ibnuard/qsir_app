@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/category/widgets/category_picker_bottom_sheet.dart';
 import 'package:qsir_app/presentation/widgets/counter_input.dart';
 import 'package:qsir_app/presentation/widgets/custom_input.dart';
 import 'package:qsir_app/presentation/widgets/input_group.dart';
@@ -49,11 +50,18 @@ class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
   }
 
   void _initializeData() {
+    useDiscount = product.useDiscount;
+    discountPercent = product.discountPercent;
+    originalPrice = product.price;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.getController('name').text = product.name;
       _controller.getController('price').text = product.price.toStringAsFixed(
         0,
       );
+      _controller.getController('discount_percent').text = product
+          .discountPercent
+          .toStringAsFixed(0);
       _controller.getController('stock').text = product.stock.toString();
       _controller.getController('category_id').text = product.categoryId;
       _controller.getController('sku').text = product.sku;
@@ -277,8 +285,19 @@ class _OwnerProductDetailPageState extends State<OwnerProductDetailPage> {
                   InputGroupItem(
                     key: 'category_id',
                     label: 'Kategori',
+                    readOnly: true,
+                    onTap: () {
+                      Get.bottomSheet(
+                        CategoryPickerBottomSheet(
+                          onSelected: (category) {
+                            _controller.setText('category_id', category.name);
+                          },
+                        ),
+                      );
+                    },
                     decoration: const InputDecoration(
                       hintText: 'Pilih Kategori',
+                      suffixIcon: Icon(Icons.arrow_drop_down),
                     ),
                   ),
                   InputGroupItem(
