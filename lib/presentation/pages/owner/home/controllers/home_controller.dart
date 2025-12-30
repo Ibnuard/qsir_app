@@ -49,7 +49,11 @@ class HomeController extends GetxController {
         break;
       case 'Kas & Shift':
         items = [
-          SubMenuItem(title: 'Open / Close shift', icon: Icons.swap_horiz),
+          SubMenuItem(
+            title: 'Open / Close shift',
+            icon: Icons.swap_horiz,
+            onTap: () => navigateToMenu(AppRoutes.ownerCashShift),
+          ),
           SubMenuItem(title: 'Riwayat cash in / out', icon: Icons.history),
           SubMenuItem(title: 'Selisih kas', icon: Icons.money_off),
           SubMenuItem(title: 'Laporan penutupan', icon: Icons.summarize),
