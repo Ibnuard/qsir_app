@@ -26,6 +26,16 @@ class HomeController extends GetxController {
       'icon': Icons.groups_rounded,
       'colors': [const Color(0xFF9C27B0), const Color(0xFFBA68C8)],
     },
+    {
+      'label': 'Sales / Transaksi',
+      'icon': Icons.bar_chart_rounded,
+      'colors': [const Color(0xFFE91E63), const Color(0xFFF06292)],
+    },
+    {
+      'label': 'Pengaturan',
+      'icon': Icons.settings_rounded,
+      'colors': [const Color(0xFF607D8B), const Color(0xFF90A4AE)],
+    },
   ];
 
   void navigateToSubMenu(String label) {
@@ -72,6 +82,22 @@ class HomeController extends GetxController {
           SubMenuItem(title: 'Daftar pelanggan', icon: Icons.people),
           SubMenuItem(title: 'Riwayat belanja', icon: Icons.shopping_bag),
           SubMenuItem(title: 'Member / loyalty', icon: Icons.card_membership),
+        ];
+        break;
+      case 'Sales / Transaksi':
+        items = [
+          SubMenuItem(title: 'Ringkasan penjualan', icon: Icons.analytics),
+          SubMenuItem(title: 'Riwayat transaksi', icon: Icons.receipt_long),
+          SubMenuItem(title: 'Laporan laba rugi', icon: Icons.payments),
+          SubMenuItem(title: 'Produk terlaris', icon: Icons.trending_up),
+        ];
+        break;
+      case 'Pengaturan':
+        items = [
+          SubMenuItem(title: 'Printer & struk', icon: Icons.print),
+          SubMenuItem(title: 'Pajak & biaya', icon: Icons.percent),
+          SubMenuItem(title: 'Metode pembayaran', icon: Icons.payment),
+          SubMenuItem(title: 'Info outlet', icon: Icons.store),
         ];
         break;
     }
