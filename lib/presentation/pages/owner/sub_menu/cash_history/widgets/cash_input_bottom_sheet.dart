@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
+import 'package:qsir_app/core/utils/currency_input_formatter.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_history/controllers/cash_history_controller.dart';
 import 'package:qsir_app/presentation/widgets/custom_input.dart';
 
@@ -28,114 +29,124 @@ class _CashInputBottomSheetState extends State<CashInputBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(24.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 0.9.sh),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 24.w,
+              right: 24.w,
+              top: 24.w,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24.w,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Tambah Arus Kas",
+                      style: context.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Get.back(),
+                      icon: const Icon(Icons.close),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24.h),
                 Text(
-                  "Tambah Arus Kas",
-                  style: context.textTheme.titleLarge?.copyWith(
+                  "Jenis Transaksi",
+                  style: context.textTheme.labelMedium?.copyWith(
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Icons.close),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                SizedBox(height: 12.h),
+                Row(
+                  children: [
+                    _buildTypeChip('Cash In', AppColors.success),
+                    SizedBox(width: 12.w),
+                    _buildTypeChip('Cash Out', AppColors.error),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(height: 24.h),
-            Text(
-              "Jenis Transaksi",
-              style: context.textTheme.labelMedium?.copyWith(
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 12.h),
-            Row(
-              children: [
-                _buildTypeChip('Cash In', AppColors.success),
-                SizedBox(width: 12.w),
-                _buildTypeChip('Cash Out', AppColors.error),
-              ],
-            ),
-            SizedBox(height: 24.h),
-            CustomInput(
-              controller: amountController,
-              label: "Nominal",
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: const InputDecoration(
-                hintText: "Masukkan nominal",
-                prefixText: "Rp ",
-              ),
-            ),
-            SizedBox(height: 16.h),
-            CustomInput(
-              controller: noteController,
-              label: "Catatan (Opsional)",
-              maxLines: 3,
-              decoration: const InputDecoration(
-                hintText: "Contoh: Beli bensin",
-              ),
-            ),
-            SizedBox(height: 32.h),
-            SizedBox(
-              width: double.infinity,
-              height: 52.h,
-              child: ElevatedButton(
-                onPressed: () {
-                  final amountStr = amountController.text.replaceAll(
-                    RegExp(r'[^0-9]'),
-                    '',
-                  );
-                  if (amountStr.isEmpty) {
-                    Get.snackbar(
-                      "Error",
-                      "Nominal tidak boleh kosong",
-                      backgroundColor: AppColors.error,
-                      colorText: Colors.white,
-                    );
-                    return;
-                  }
-
-                  controller.addRecord(
-                    type: selectedType,
-                    amount: double.parse(amountStr),
-                    note: noteController.text,
-                  );
-                  Get.back();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+                SizedBox(height: 24.h),
+                CustomInput(
+                  controller: amountController,
+                  label: "Nominal",
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CurrencyInputFormatter(),
+                  ],
+                  decoration: const InputDecoration(
+                    hintText: "Masukkan nominal",
+                    prefixText: "Rp ",
                   ),
                 ),
-                child: const Text(
-                  "Simpan Transaksi",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(height: 16.h),
+                CustomInput(
+                  controller: noteController,
+                  label: "Catatan (Opsional)",
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    hintText: "Contoh: Beli bensin",
+                  ),
                 ),
-              ),
+                SizedBox(height: 32.h),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final amountStr = amountController.text.replaceAll(
+                        RegExp(r'[^0-9]'),
+                        '',
+                      );
+                      if (amountStr.isEmpty) {
+                        Get.snackbar(
+                          "Error",
+                          "Nominal tidak boleh kosong",
+                          backgroundColor: AppColors.error,
+                          colorText: Colors.white,
+                        );
+                        return;
+                      }
+
+                      controller.addRecord(
+                        type: selectedType,
+                        amount: double.parse(amountStr),
+                        note: noteController.text,
+                      );
+                      Get.back();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                    child: const Text(
+                      "Simpan Transaksi",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
