@@ -12,4 +12,5 @@ class AppRoutes {
   static const ownerCashDiff = '/owner/cash-diff';
   static const ownerCashDiffHistory = '/owner/cash-diff/history';
   static const ownerClosingReport = '/owner/closing-report';
+  static const ownerClosingReportSales = '/owner/closing-report/sales';
 }

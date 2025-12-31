@@ -14,6 +14,7 @@ import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/cash_diff_h
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/cash_diff_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/bindings/closing_report_binding.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/closing_report_page.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/closing_report_sales_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/productlist/owner_product_list_page.dart';
 import 'package:qsir_app/presentation/pages/splash/splash_page.dart';
 import 'package:qsir_app/routes/app_routes.dart';
@@ -62,6 +63,10 @@ class AppPages {
       name: AppRoutes.ownerClosingReport,
       page: () => const ClosingReportPage(),
       binding: ClosingReportBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ownerClosingReportSales,
+      page: () => const ClosingReportSalesPage(),
     ),
   ];
 }

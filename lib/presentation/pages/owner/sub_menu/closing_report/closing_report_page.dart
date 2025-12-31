@@ -5,6 +5,7 @@ import 'package:qsir_app/core/themes/app_theme.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/models/cash_diff_record.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/controllers/closing_report_controller.dart';
 import 'package:qsir_app/presentation/widgets/date_selector.dart';
+import 'package:qsir_app/routes/app_routes.dart';
 
 class ClosingReportPage extends GetView<ClosingReportController> {
   const ClosingReportPage({super.key});
@@ -61,7 +62,25 @@ class ClosingReportPage extends GetView<ClosingReportController> {
                     if (report.salesBreakdown != null &&
                         report.salesBreakdown!.isNotEmpty) ...[
                       SizedBox(height: 24.h),
-                      _buildSectionTitle(context, "Total Penjualan"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildSectionTitle(context, "Total Penjualan"),
+                          TextButton(
+                            onPressed: () => Get.toNamed(
+                              AppRoutes.ownerClosingReportSales,
+                              arguments: report.salesBreakdown,
+                            ),
+                            child: Text(
+                              "Tampilkan Semua",
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 12.h),
                       _buildSalesBreakdown(context, report.salesBreakdown!),
                     ],
