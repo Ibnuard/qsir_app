@@ -11,20 +11,28 @@ class CashDiffController extends GetxController {
   final latestShift = Rxn<CashDiffRecord>();
 
   final isHistoryExpanded = false.obs;
+  final selectedDate = DateTime.now().obs;
 
   @override
   void onInit() {
     super.onInit();
+    onDateChanged(selectedDate.value);
+  }
+
+  void onDateChanged(DateTime date) {
+    selectedDate.value = date;
     _loadDummyData();
   }
 
   void _loadDummyData() {
+    final baseDate = selectedDate.value;
+
     latestShift.value = CashDiffRecord(
-      id: "S-12345",
+      id: "S-${DateFormat('yyyyMMdd').format(baseDate)}-1",
       openedBy: "Ahmad (Kasir)",
-      openedAt: DateTime.now().subtract(const Duration(hours: 8)),
+      openedAt: DateTime(baseDate.year, baseDate.month, baseDate.day, 8, 0),
       closedBy: "Budi (Supervisor)",
-      closedAt: DateTime.now(),
+      closedAt: DateTime(baseDate.year, baseDate.month, baseDate.day, 16, 0),
       saldoAwal: 500000,
       penjualanCash: 1250000,
       cashIn: 200000,
@@ -35,17 +43,29 @@ class CashDiffController extends GetxController {
       note: "Ada selisih di penjualan voucher fisik yang belum tercatat.",
     );
 
-    final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    final twoDaysAgo = DateTime.now().subtract(const Duration(days: 2));
+    final dayBefore = baseDate.subtract(const Duration(days: 1));
+    final twoDaysBefore = baseDate.subtract(const Duration(days: 2));
 
     final list = [
       latestShift.value!,
       CashDiffRecord(
-        id: "S-12344",
+        id: "S-${DateFormat('yyyyMMdd').format(dayBefore)}-1",
         openedBy: "Siti (Kasir)",
-        openedAt: yesterday.subtract(const Duration(hours: 8)),
+        openedAt: DateTime(
+          dayBefore.year,
+          dayBefore.month,
+          dayBefore.day,
+          8,
+          0,
+        ),
         closedBy: "Budi (Supervisor)",
-        closedAt: yesterday,
+        closedAt: DateTime(
+          dayBefore.year,
+          dayBefore.month,
+          dayBefore.day,
+          16,
+          0,
+        ),
         saldoAwal: 500000,
         penjualanCash: 2100000,
         cashIn: 0,
@@ -55,11 +75,23 @@ class CashDiffController extends GetxController {
         amount: 0,
       ),
       CashDiffRecord(
-        id: "S-12343",
+        id: "S-${DateFormat('yyyyMMdd').format(twoDaysBefore)}-1",
         openedBy: "Ahmad (Kasir)",
-        openedAt: twoDaysAgo.subtract(const Duration(hours: 8)),
+        openedAt: DateTime(
+          twoDaysBefore.year,
+          twoDaysBefore.month,
+          twoDaysBefore.day,
+          8,
+          0,
+        ),
         closedBy: "Siti (Kasir)",
-        closedAt: twoDaysAgo,
+        closedAt: DateTime(
+          twoDaysBefore.year,
+          twoDaysBefore.month,
+          twoDaysBefore.day,
+          16,
+          0,
+        ),
         saldoAwal: 500000,
         penjualanCash: 1800000,
         cashIn: 50000,

@@ -1,3 +1,27 @@
+class SalesBreakdownItem {
+  final String label;
+  final double amount;
+  final int count;
+
+  SalesBreakdownItem({
+    required this.label,
+    required this.amount,
+    required this.count,
+  });
+}
+
+class PaymentMethodItem {
+  final String method;
+  final double amount;
+  final int count;
+
+  PaymentMethodItem({
+    required this.method,
+    required this.amount,
+    required this.count,
+  });
+}
+
 class CashDiffRecord {
   final String id;
   final String openedBy;
@@ -13,6 +37,10 @@ class CashDiffRecord {
   final double amount;
   final String? note;
 
+  // Breakdowns for Closing Report
+  final List<SalesBreakdownItem>? salesBreakdown;
+  final List<PaymentMethodItem>? paymentMethods;
+
   CashDiffRecord({
     required this.id,
     required this.openedBy,
@@ -27,5 +55,7 @@ class CashDiffRecord {
     required this.saldoFisik,
     required this.amount,
     this.note,
+    this.salesBreakdown,
+    this.paymentMethods,
   });
 }
