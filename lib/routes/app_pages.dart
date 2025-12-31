@@ -9,6 +9,8 @@ import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_history/cash_his
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/add/owner_product_add_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/detail/owner_product_detail_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/bindings/cash_diff_binding.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/bindings/cash_diff_history_binding.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/cash_diff_history_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/cash_diff_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/bindings/closing_report_binding.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/closing_report_page.dart';
@@ -50,6 +52,11 @@ class AppPages {
       name: AppRoutes.ownerCashDiff,
       page: () => const CashDiffPage(),
       binding: CashDiffBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ownerCashDiffHistory,
+      page: () => const CashDiffHistoryPage(),
+      binding: CashDiffHistoryBinding(),
     ),
     GetPage(
       name: AppRoutes.ownerClosingReport,

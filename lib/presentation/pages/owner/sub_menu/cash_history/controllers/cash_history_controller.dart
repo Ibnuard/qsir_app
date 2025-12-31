@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -21,11 +22,39 @@ class CashRecord {
 
 class CashHistoryController extends GetxController {
   final records = <CashRecord>[].obs;
+  final selectedRange = Rxn<DateTimeRange>();
+
+  List<CashRecord> get filteredRecords {
+    if (selectedRange.value == null) return records;
+    return records.where((record) {
+      final date = record.time;
+      final start = selectedRange.value!.start;
+      final end = selectedRange.value!.end;
+      // Compare only the date part for the range
+      final recordDate = DateTime(date.year, date.month, date.day);
+      final startDate = DateTime(start.year, start.month, start.day);
+      final endDate = DateTime(end.year, end.month, end.day);
+
+      return recordDate.isAtSameMomentAs(startDate) ||
+          recordDate.isAtSameMomentAs(endDate) ||
+          (recordDate.isAfter(startDate) && recordDate.isBefore(endDate));
+    }).toList();
+  }
+
+  bool get isFilterActive => selectedRange.value != null;
 
   @override
   void onInit() {
     super.onInit();
     _loadDummyData();
+  }
+
+  void setDateRange(DateTimeRange? range) {
+    selectedRange.value = range;
+  }
+
+  void resetFilter() {
+    selectedRange.value = null;
   }
 
   void _loadDummyData() {

@@ -83,7 +83,8 @@ class CashDiffPage extends GetView<CashDiffController> {
                         children: [
                           _buildSectionTitle(context, "Riwayat Selisih Kas"),
                           InkWell(
-                            onTap: null, // No action as requested
+                            onTap: () =>
+                                Get.toNamed(AppRoutes.ownerCashDiffHistory),
                             borderRadius: BorderRadius.circular(8.r),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -97,9 +98,7 @@ class CashDiffPage extends GetView<CashDiffController> {
                                     "Lihat Semua",
                                     style: context.textTheme.bodySmall
                                         ?.copyWith(
-                                          color: AppColors.primary.withValues(
-                                            alpha: 0.5,
-                                          ), // Muted for no action
+                                          color: AppColors.primary,
                                           fontWeight: FontWeight.bold,
                                         ),
                                   ),
@@ -107,9 +106,7 @@ class CashDiffPage extends GetView<CashDiffController> {
                                   Icon(
                                     Icons.arrow_forward_ios,
                                     size: 10.sp,
-                                    color: AppColors.primary.withValues(
-                                      alpha: 0.5,
-                                    ), // Muted for no action
+                                    color: AppColors.primary,
                                   ),
                                 ],
                               ),
