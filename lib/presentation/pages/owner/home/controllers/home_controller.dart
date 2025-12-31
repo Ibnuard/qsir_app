@@ -88,8 +88,16 @@ class HomeController extends GetxController {
             icon: Icons.person,
             onTap: () => navigateToMenu(AppRoutes.ownerCashierManagement),
           ),
-          SubMenuItem(title: 'Set PIN kasir', icon: Icons.pin),
-          SubMenuItem(title: 'Riwayat login kasir', icon: Icons.login),
+          SubMenuItem(
+            title: 'Ubah password kasir',
+            icon: Icons.pin,
+            onTap: () => navigateToMenu(AppRoutes.ownerChangeCashierPassword),
+          ),
+          SubMenuItem(
+            title: 'Riwayat login kasir',
+            icon: Icons.login,
+            onTap: () => navigateToMenu(AppRoutes.ownerCashierLoginHistory),
+          ),
         ];
         break;
       case 'Pelanggan':

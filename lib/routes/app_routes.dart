@@ -15,4 +15,8 @@ class AppRoutes {
   static const ownerClosingReportSales = '/owner/closing-report/sales';
   static const ownerCashierManagement = '/owner/cashier-management';
   static const ownerAddCashier = '/owner/cashier-management/add';
+  static const ownerChangeCashierPassword =
+      '/owner/cashier-management/change-password';
+  static const ownerCashierLoginHistory =
+      '/owner/cashier-management/login-history';
 }

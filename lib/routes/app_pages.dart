@@ -17,7 +17,10 @@ import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/closin
 import 'package:qsir_app/presentation/pages/owner/sub_menu/closing_report/closing_report_sales_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/add_cashier_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/bindings/cashier_management_binding.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/bindings/cashier_login_history_binding.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/cashier_management_page.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/change_cashier_password_page.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cashier/cashier_login_history_page.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/product/productlist/owner_product_list_page.dart';
 import 'package:qsir_app/presentation/pages/splash/splash_page.dart';
 import 'package:qsir_app/routes/app_routes.dart';
@@ -79,6 +82,16 @@ class AppPages {
     GetPage(
       name: AppRoutes.ownerAddCashier,
       page: () => const AddCashierPage(),
+    ),
+    GetPage(
+      name: AppRoutes.ownerChangeCashierPassword,
+      page: () => const ChangeCashierPasswordPage(),
+      binding: CashierManagementBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ownerCashierLoginHistory,
+      page: () => const CashierLoginHistoryPage(),
+      binding: CashierLoginHistoryBinding(),
     ),
   ];
 }
