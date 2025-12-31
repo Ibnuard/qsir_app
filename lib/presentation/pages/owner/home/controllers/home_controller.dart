@@ -83,9 +83,12 @@ class HomeController extends GetxController {
         break;
       case 'Managemen Kasir':
         items = [
-          SubMenuItem(title: 'Tambah kasir', icon: Icons.person_add),
+          SubMenuItem(
+            title: 'Kasir',
+            icon: Icons.person,
+            onTap: () => navigateToMenu(AppRoutes.ownerCashierManagement),
+          ),
           SubMenuItem(title: 'Set PIN kasir', icon: Icons.pin),
-          SubMenuItem(title: 'Aktif / nonaktif kasir', icon: Icons.toggle_on),
           SubMenuItem(title: 'Riwayat login kasir', icon: Icons.login),
         ];
         break;
