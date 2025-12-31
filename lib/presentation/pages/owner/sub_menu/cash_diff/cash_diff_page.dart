@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:qsir_app/core/themes/app_theme.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/controllers/cash_diff_controller.dart';
 import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/models/cash_diff_record.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/widgets/cash_diff_empty_state.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/widgets/cash_diff_history_card.dart';
+import 'package:qsir_app/presentation/pages/owner/sub_menu/cash_diff/widgets/cash_diff_status_indicator.dart';
 import 'package:qsir_app/presentation/widgets/date_selector.dart';
 import 'package:qsir_app/routes/app_routes.dart';
 
@@ -29,7 +32,7 @@ class CashDiffPage extends GetView<CashDiffController> {
       body: Obx(() {
         if (controller.latestShift.value == null &&
             controller.history.isEmpty) {
-          return _buildEmptyState(context);
+          return const CashDiffEmptyState();
         }
 
         return SingleChildScrollView(
@@ -42,9 +45,7 @@ class CashDiffPage extends GetView<CashDiffController> {
                 selectedDate: controller.selectedDate.value,
                 onDateSelected: controller.onDateChanged,
               ),
-
               SizedBox(height: 12.h),
-
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
@@ -52,9 +53,11 @@ class CashDiffPage extends GetView<CashDiffController> {
                   children: [
                     if (controller.latestShift.value != null) ...[
                       SizedBox(height: 8.h),
-                      _buildStatusIndicator(
-                        context,
-                        controller.latestShift.value!,
+                      CashDiffStatusIndicator(
+                        record: controller.latestShift.value!,
+                        formatCurrency: controller.formatCurrency,
+                        getStatusColor: controller.getStatusColor,
+                        getStatusLabel: controller.getStatusLabel,
                       ),
                       SizedBox(height: 20.h),
                       SizedBox(
@@ -128,91 +131,12 @@ class CashDiffPage extends GetView<CashDiffController> {
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.account_balance_wallet_outlined,
-            size: 64.sp,
-            color: Colors.grey.shade300,
-          ),
-          SizedBox(height: 16.h),
-          Text(
-            "Belum ada data selisih kas",
-            style: context.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildSectionTitle(BuildContext context, String title) {
     return Text(
       title,
       style: context.textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
         color: Colors.black87,
-      ),
-    );
-  }
-
-  Widget _buildStatusIndicator(BuildContext context, CashDiffRecord record) {
-    final color = controller.getStatusColor(record.amount);
-    final isDifference = record.amount != 0;
-
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    if (isDifference)
-                      Icon(
-                        Icons.warning_amber_rounded,
-                        color: color,
-                        size: 16.sp,
-                      ),
-                    if (isDifference) SizedBox(width: 6.w),
-                    Text(
-                      controller.getStatusLabel(record.amount),
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  controller.formatCurrency(record.amount),
-                  style: context.textTheme.headlineSmall?.copyWith(
-                    color: color,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (isDifference)
-            Icon(
-              Icons.error_outline,
-              color: color.withValues(alpha: 0.5),
-              size: 32.sp,
-            ),
-        ],
       ),
     );
   }
@@ -227,99 +151,18 @@ class CashDiffPage extends GetView<CashDiffController> {
 
     return Column(
       children: recordsToShow
-          .map((record) => _buildHistoryItem(context, record))
+          .map(
+            (record) => CashDiffHistoryCard(
+              record: record,
+              onTap: () => _showDetailModal(context, record),
+              formatCurrency: controller.formatCurrency,
+              formatDate: controller.formatDate,
+              formatTime: controller.formatTime,
+              getStatusColor: controller.getStatusColor,
+              getStatusLabel: controller.getStatusLabel,
+            ),
+          )
           .toList(),
-    );
-  }
-
-  Widget _buildHistoryItem(BuildContext context, CashDiffRecord record) {
-    final color = controller.getStatusColor(record.amount);
-
-    return InkWell(
-      onTap: () => _showDetailModal(context, record),
-      borderRadius: BorderRadius.circular(16.r),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8.h),
-        padding: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: Colors.grey.shade100),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(8.w),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                record.amount == 0
-                    ? Icons.check_circle_outline
-                    : Icons.warning_amber_rounded,
-                color: color,
-                size: 20.sp,
-              ),
-            ),
-            SizedBox(width: 16.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    controller.formatDate(record.openedAt),
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                      fontSize: 10.sp,
-                    ),
-                  ),
-                  Text(
-                    "${controller.formatTime(record.openedAt)} - ${controller.formatTime(record.closedAt)}",
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    controller.getStatusLabel(record.amount),
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  controller.formatCurrency(record.amount),
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
-                ),
-                Text(
-                  controller.formatCurrency(record.saldoFisik),
-                  style: context.textTheme.bodySmall?.copyWith(
-                    fontSize: 10.sp,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(width: 8.w),
-            Icon(Icons.chevron_right, size: 18.sp, color: Colors.grey.shade300),
-          ],
-        ),
-      ),
     );
   }
 
